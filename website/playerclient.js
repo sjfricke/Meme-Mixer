@@ -22,6 +22,8 @@ var SongList = [
   "Song 8"
   ]
 
+var songStoped = false;
+
 var clientID = 0;
 var currentSong = 0;
 

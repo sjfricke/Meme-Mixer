@@ -1,6 +1,8 @@
 // global WebSocket pointer
 var webSocket;
 
+const SEEK_CONST = 500; // 500ms
+
 // Used to package values to be sent down to C
 function broadcast(key, ...values) {
     if (isNaN(key )) { return false; }
@@ -22,7 +24,7 @@ console.log(event);
     case 2: // Green Button
       break;
     case 3: // Jog Wheel Button
-      broadcast(3, currentSong);
+      broadcast(1, currentSong);
       document.getElementById("selectionMode").style.display = "none";
       document.getElementById("playerMode").style.display = "block";
       g_state = 1;
@@ -41,8 +43,16 @@ console.log(event);
   } else if (g_state == 1) { // Play
     switch(parseInt(message.type)) {
     case 0: // Red button
+      if (songStoped) {
+        songStoped = false;
+        broadcast(6,0); // resume
+      } else {
+        songStoped = true;
+        broadcast(0, 0);
+      }
       break;
-    case 1: // Yellow Button  
+    case 1: // Yellow Button 
+      broadcast(3,0);
       break;
     case 2: // Green Button
       document.getElementById("playerMode").style.display = "none";
@@ -52,10 +62,13 @@ console.log(event);
     case 3: // Jog Wheel Button
       break;
     case 4: // Jog Wheel LEFT
+      broadcast(9, SEEK_CONST);
       break;
     case 5: // Jog Wheel RIGHT
+      broadcast(8, SEEK_CONST);
       break;
     case 6: // Volume
+      // displays volume, reall data already sent to audio
       break;
     default:
       warn("WebSocket", "No case for data: %0", message);
