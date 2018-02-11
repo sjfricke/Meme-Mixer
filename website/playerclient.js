@@ -11,15 +11,23 @@ $(document).ready(function() {
 // play state == 1
 var g_state = 0;
 
+// use index for number
+// duration  in milliseconds
 var SongList = [
-  "Song 1",
-  "Song 2",
-  "Song 3",
-  "Song 4",
-  "Song 5",
-  "Song 6",
-  "Song 7",
-  "Song 8"
+  {"title" : "All Stars", "duration" : "18750" },
+  {"title" : "Big Shaq Rap", "duration" : "7820" },
+  {"title" : "Captain Teemo", "duration" : "2300" },
+  {"title" : "Emperor Palpatine", "duration" : "4790" },
+  {"title" : "F is for Friends", "duration" : "5690" },
+  {"title" : "Mine Mine Mine", "duration" : "11410" },
+  {"title" : "Mr Meseeks", "duration" : "2610" },
+  {"title" : "Nothing is Impossible", "duration" : "1540" },
+  {"title" : "Over 9000", "duration" : "5130" },
+  {"title" : "Quick Math", "duration" : "3350" },
+  {"title" : "Riggity Riggity", "duration" : "3000" },
+  {"title" : "Roys off the grid", "duration" : "5150" },
+  {"title" : "Wizard Harry", "duration" : "1380" },
+  {"title" : "Wubbalubbadubdub", "duration" : "1120" }
   ]
 
 var songStoped = false;
