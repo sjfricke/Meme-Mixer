@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example;
+//package com.example;
 
 // Java program to play an Audio
 // file using Clip Object
@@ -30,9 +30,22 @@ public class SimpleAudioPlayer {
     Long seekSec = 0L;
     int volume = 0;
     AudioInputStream audioInputStream;
-    String[] filePath1 = {"//Users//shrikantjesu//Documents//Maroon_5_-_Animals.wav",
-        "//Users//shrikantjesu//Documents//Charlie_Puth.wav",
-        "//Users//shrikantjesu//Documents//The-Chainsmokers.wav"};
+    String[] filePath1 = {
+    "/home/linaro/Meme-Mixer/speaker/songs/All_Star.wav",
+                "/home/linaro/Meme-Mixer/speaker/songs/Biq_Shaq.wav",
+		            "/home/linaro/Meme-Mixer/speaker/songs/Captain_Teemo.wav",
+		           "/home/linaro/Meme-Mixer/speaker/songs/Charlie_Puth.wav",
+	        "/home/linaro/Meme-Mixer/speaker/songs/Emperor_Palpatine.wav",
+		               "/home/linaro/Meme-Mixer/speaker/songs/F_is_for_friends.wav",
+		            "/home/linaro/Meme-Mixer/speaker/songs/Mine.wav",
+	                "/home/linaro/Meme-Mixer/speaker/songs/Mr_Meseeks.wav",
+		            "/home/linaro/Meme-Mixer/speaker/songs/Nothing_is_Impossible.wav",
+				                     "/home/linaro/Meme-Mixer/speaker/songs/Over_9000.wav",											                                    "/home/linaro/Meme-Mixer/speaker/songs/Quick_Math.wav",
+               "/home/linaro/Meme-Mixer/speaker/songs/Riggity_Riggity_Wreaked_Son.wav",
+	           "/home/linaro/Meme-Mixer/speaker/songs/Roy_off_the_grid.wav",
+			                "/home/linaro/Meme-Mixer/speaker/songs/Wizard_Harry.wav",
+			            "/home/linaro/Meme-Mixer/speaker/songs/WubbaLubbaDubDub.wav",
+    };
 
     // constructor to initialize streams and clip
     public void initializeAudioPlayer(String filePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -60,6 +73,9 @@ public class SimpleAudioPlayer {
     public int startMusic(String received) {
         try {
 
+		System.out.println(received);
+		String value=received.substring(0,received.indexOf(';'));
+		received=value;
             int key = Integer.parseInt(received.substring(0, 1));
             if (key == 1) {
                 index = Integer.parseInt(received.substring(2));
@@ -193,8 +209,8 @@ public class SimpleAudioPlayer {
     }
 
     private void next() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        index = ++index > 2 ? 0 : index;
-        if (index < 3) {
+        index = ++index > 15 ? 0 : index;
+        if (index < 15) {
             System.err.println(filePath1[index] + "Index" + index);
             initializeAudioPlayer(filePath1[index]);
             clip.start();
@@ -203,8 +219,8 @@ public class SimpleAudioPlayer {
     }
 
     private void previous() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        index = --index < 0 ? 2 : index;
-        if (--index >= 0) {
+        index = --index < 0 ? 14 : index;
+        if (index >= 0) {
             initializeAudioPlayer(filePath1[index]);
             clip.start();
             status = "play";
