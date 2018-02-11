@@ -125,7 +125,6 @@ function changegif(direction){
 }
 
 function startvisualization(){
-  alert("init viz");
   var player = document.getElementById("audio");
   player.src =SongList[currentSong].title.replace(/\s+/g, '_')+".wav";
   player.play();
@@ -133,7 +132,7 @@ function startvisualization(){
     initializeVisualizer($("canvas")[0], $("audio")[0]);
     initialized = true;
   }
-  updateSongText("mine");
+  updateSongText(player.src);
 }
 
 function stupid(){

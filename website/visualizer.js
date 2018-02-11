@@ -1,7 +1,17 @@
+function getRandomColor() {
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+	  color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+  }
+  
+  
 //Note: bins needs to be a power of 2
 let displayBins = 512;
 let backgroundColour = "#2C2E3B";
-let barColour = "#EC1A55";
+let barColour = getRandomColor();
 let songFont = "15px 'Open Sans'";
 //Where the bottom of the waveform is rendered at (out of 255). I recommend
 //leaving it at 96 since it seems to work well, basically any volume will push
@@ -11,7 +21,7 @@ let floorLevel = 96;
 //Whether to draw the frequencies directly, or scale the x-axis logarithmically and show pitch instead.
 let drawPitch = true;
 //Whether to draw the visualisation as a curve instead of discrete bars
-let drawCurved = true;
+let drawCurved = false;
 //If drawCurved is enabled, this flag fills the area beneath the curve (the same colour as the line)
 let drawFilled = false;
 //Whether to draw text the songText on top of the visualisation
