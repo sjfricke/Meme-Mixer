@@ -8,12 +8,12 @@
     <script src="websocket.js"></script>
     
     <script src='radialtimer.js' type='text/javascript'></script>
+    <script src='visualizer.js' type='text/javascript'></script>
         
     <script type="text/javascript" src="playerclient.js"></script>
     <script type="text/javascript" src="wheelnav.min.js"></script>
     <script type="text/javascript" src="raphael.min.js"></script>
     <script type="text/javascript" src="raphael.icons.min.js"></script>
-    
 </head>
 <body>
 
@@ -35,8 +35,11 @@
     
     <div id="playerMode">        
         <div id="player">
-            <button id="play" class="playBtn"></button>
+            <button id="play" class="pauseBtn"></button>
         </div>
+        <audio id="audio"></audio>
+        <canvas
+        style="position: absolute; top: 50%; left: 40%; transform: translate(-50%, -50%);" id="canvas" width="800px" height="400px"></canvas>
       <div id="buttons">
           <button id="red">PLAY/PAUSE</button>
           <button id="yellow">NEXT</button>

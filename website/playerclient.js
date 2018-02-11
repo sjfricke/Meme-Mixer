@@ -11,10 +11,13 @@ $(document).ready(function() {
 // play state == 1
 var g_state = 0;
 
+// visualization
+var initialized = false;
+
 // use index for number
 // duration  in milliseconds
 var SongList = [
-  {"title" : "All Stars", "duration" : "18750" },
+  {"title" : "All Star", "duration" : "18750" },
   {"title" : "Big Shaq Rap", "duration" : "7820" },
   {"title" : "Captain Teemo", "duration" : "2300" },
   {"title" : "Emperor Palpatine", "duration" : "4790" },
@@ -119,6 +122,18 @@ function skiptosong(num){
 function changegif(direction){
   var gif=document.getElementById("gif");
   gif.src=GifList[currentSong];
+}
+
+function startvisualization(){
+  alert("init viz");
+  var player = document.getElementById("audio");
+  player.src =SongList[currentSong].title.replace(/\s+/g, '_')+".wav";
+  player.play();
+  if (!initialized) {
+    initializeVisualizer($("canvas")[0], $("audio")[0]);
+    initialized = true;
+  }
+  updateSongText("mine");
 }
 
 function stupid(){

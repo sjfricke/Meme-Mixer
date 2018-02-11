@@ -28,6 +28,7 @@ console.log(event);
       document.getElementById("selectionMode").style.display = "none";
       document.getElementById("playerMode").style.display = "block";
       g_state = 1;
+      startvisualization();
       break;
     case 4: // Jog Wheel LEFT
       prevsong();
@@ -42,17 +43,20 @@ console.log(event);
     default:
       warn("WebSocket", "No case for data: %0", message);
     }
-  } else if (g_state == 1) { // Play
-    switch(parseInt(message.type)) {
+  } else if (g_state == 1) { // Play    
+    switch(parseInt(message.type)) { 
     case 0: // Red button
       var btn=document.getElementById("play");
+      var player = document.getElementById("audio");
       btn.classList="";
       if (songStoped) {
         songStoped = false;
         btn.classList="playBtn";
+        player.play();
         broadcast(6,0); // resume
       } else {
         songStoped = true;
+        player.pause();
         btn.classList="pauseBtn";
         broadcast(0, 0);
       }
