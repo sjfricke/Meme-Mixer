@@ -63,11 +63,13 @@ console.log(event);
       }
       break;
     case 1: // Yellow Button 
+      playnextsong();
       broadcast(3,0);
       break;
     case 2: // Green Button
       document.getElementById("playerMode").style.display = "none";
       document.getElementById("selectionMode").style.display = "block";
+      if(player != null) player.pause();
       g_state = 0;
       break;
     case 3: // Jog Wheel Button
