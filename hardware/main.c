@@ -14,8 +14,8 @@
 #define RED_BUT 17
 #define YELLOW_BUT 27
 #define GREEN_BUT 22
-#define JOG_DATA_A 16
-#define JOG_DATA_B 20
+#define JOG_DATA_A 20
+#define JOG_DATA_B 16
 #define SLIDER 0
 #define POT_KNOB 2
 
@@ -56,24 +56,24 @@ void redButton(void) {
   c_red_irq = millis();
   if (c_red_irq - last_red_irq > 150) {
       puts("red");
-    // broadcastInt("3", 0);
+      broadcastInt("0", 0);
   }
   last_red_irq = c_red_irq;
 }
 void yellowButton(void) {
   c_yellow_irq = millis();
   if (c_yellow_irq - last_yellow_irq > 150) {
-      puts("yello");
-    // broadcastInt("3", 0);
+      puts("yellow");
+      broadcastInt("1", 0);
   }
   last_yellow_irq = c_yellow_irq;
 }
 void greenButton(void) {
   c_green_irq = millis();
   // bad circuit?
-  if ((c_green_irq - last_green_irq > 150) && (c_green_irq - last_yellow_irq > 300)) {
+  if ((c_green_irq - last_green_irq > 150) && (c_green_irq - last_yellow_irq > 350)) {
       puts("green");
-    // broadcastInt("3", 0);
+      broadcastInt("2", 0);
   }
   last_green_irq = c_green_irq;
 }
@@ -81,7 +81,7 @@ void jogButton(void) {
   c_jog_irq = millis();
   if (c_jog_irq - last_jog_irq > 150) {
       puts("jog");
-    // broadcastInt("3", 0);
+      broadcastInt("3", 0);
   }
   last_jog_irq = c_jog_irq;
 }
@@ -89,6 +89,10 @@ void jogButton(void) {
 int main ( int argc, char* argv[] ) {
 
   int slider_v;
+  char jog_flag;
+  char jog_last_status;
+  char jog_cur_status;
+  int jog_count = 0; // left is neg, right is pos
   
   g_server = (server_t*)malloc(sizeof(server_t));
   g_server->port = 6419;
@@ -113,17 +117,53 @@ int main ( int argc, char* argv[] ) {
   if ( wiringPiISR (JOG_BUT, INT_EDGE_FALLING, &jogButton) < 0 ) {
     fprintf (stderr, "Unable to setup jog ISR: %s\n", strerror (errno)); return 1;
   }
+
+  pinMode(JOG_DATA_A, INPUT);
+  pinMode(JOG_DATA_B, INPUT);
+
+  jog_last_status = digitalRead(JOG_DATA_B);
   
   ads1115Setup (MY_BASE, 0x48);
   
   // main infinite loop
   while(1) {
+
+    // TODO - gets blocked until first jog spin
     slider_v = analogRead (MY_BASE + SLIDER);
     if (abs(slider_v - last_slider_value) > 300) {
-      printf("Slider Value: %d\n", slider_v);
+      printf("Slider Value: %d\n", slider_v / 732);
+      broadcastInt("6", slider_v / 732);
       last_slider_value = slider_v;
     }
 
-    usleep(100000); // .1 sec
+    jog_last_status = digitalRead(JOG_DATA_B);
+
+    while (!digitalRead(JOG_DATA_A)) {
+      jog_cur_status = digitalRead(JOG_DATA_B);
+      jog_flag = 1;
+    }
+
+    if (jog_flag == 1) {
+      jog_flag = 0;
+      if ((jog_last_status == 0) && (jog_cur_status == 1)) {
+	if (jog_count < 0) { jog_count = 1; }
+	else if (jog_count > 2) {
+	  puts("RIGHT");
+	  broadcastInt("5", 0);
+	  jog_count = 0;
+	}
+	else { jog_count++; }
+      }
+      if ((jog_last_status == 1) && (jog_cur_status == 0)) {
+	if (jog_count > 0) { jog_count = -1; }
+	else if (jog_count < -2) {
+	  puts("LEFT");
+	  broadcastInt("4", 0);
+	  jog_count = 0;
+	}
+	else { jog_count--; }
+      }
+    }
+    //    usleep(100000); // .1 sec
   }
 }
