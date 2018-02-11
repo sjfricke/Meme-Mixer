@@ -78,6 +78,9 @@ function progress(timeleft) {
 
 function setup() {
 
+    document.getElementById("selectionMode").style.display = "block";
+    document.getElementById("playerMode").style.display = "none";
+
     piemenu = new wheelnav('piemenu');
     piemenu.clockwise = false;
     piemenu.sliceInitPathFunction = piemenu.slicePathFunction;

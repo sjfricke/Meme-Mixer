@@ -23,6 +23,9 @@ console.log(event);
       break;
     case 3: // Jog Wheel Button
       broadcast(3, currentSong);
+      document.getElementById("selectionMode").style.display = "none";
+      document.getElementById("playerMode").style.display = "block";
+      g_state = 1;
       break;
     case 4: // Jog Wheel LEFT
       prevsong();
@@ -42,6 +45,9 @@ console.log(event);
     case 1: // Yellow Button  
       break;
     case 2: // Green Button
+      document.getElementById("playerMode").style.display = "none";
+      document.getElementById("selectionMode").style.display = "block";
+      g_state = 0;
       break;
     case 3: // Jog Wheel Button
       break;
@@ -63,6 +69,18 @@ console.log(event);
 // for testing to callback echo ws //
 /////////////////////////////////////
 
+function testRed() {    
+    webSocket.send('{"type":0,"value":0}');
+}
+function testYellow() {    
+    webSocket.send('{"type":1,"value":0}');
+}
+function testGreen() {    
+    webSocket.send('{"type":2,"value":0}');
+}
+function testJog() {    
+      webSocket.send('{"type":3,"value":0}');
+}
 function testLeft() {    
     webSocket.send('{"type":4,"value":0}');
 }
