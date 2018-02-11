@@ -28,19 +28,18 @@ public class SimpleAudioPlayer {
     // current status of clip
     String status;
     Long seekSec = 0L;
-
+int volume = 0;
     AudioInputStream audioInputStream;
     String[] filePath1 = {
     "/home/linaro/Meme-Mixer/speaker/songs/All_Star.wav",
                 "/home/linaro/Meme-Mixer/speaker/songs/Biq_Shaq.wav",
 		            "/home/linaro/Meme-Mixer/speaker/songs/Captain_Teemo.wav",
-		           "/home/linaro/Meme-Mixer/speaker/songs/Charlie_Puth.wav",
 	        "/home/linaro/Meme-Mixer/speaker/songs/Emperor_Palpatine.wav",
 		               "/home/linaro/Meme-Mixer/speaker/songs/F_is_for_friends.wav",
 		            "/home/linaro/Meme-Mixer/speaker/songs/Mine.wav",
 	                "/home/linaro/Meme-Mixer/speaker/songs/Mr_Meseeks.wav",
 		            "/home/linaro/Meme-Mixer/speaker/songs/Nothing_is_Impossible.wav",
-				                     "/home/linaro/Meme-Mixer/speaker/songs/Over_9000.wav",											                                    "/home/linaro/Meme-Mixer/speaker/songs/Quick_Math.wav",
+				  "/home/linaro/Meme-Mixer/speaker/songs/Over_9000.wav",              									                                    "/home/linaro/Meme-Mixer/speaker/songs/Quick_Math.wav",
                "/home/linaro/Meme-Mixer/speaker/songs/Riggity_Riggity_Wreaked_Son.wav",
 	           "/home/linaro/Meme-Mixer/speaker/songs/Roy_off_the_grid.wav",
 			                "/home/linaro/Meme-Mixer/speaker/songs/Wizard_Harry.wav",
@@ -48,7 +47,7 @@ public class SimpleAudioPlayer {
     };
 
     // constructor to initialize streams and clip
-    public void initializeAudioPlayer(String filePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public void initializeAudioPlayer(String filePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 
         if (clip != null) {
             if (clip.isRunning()) {
@@ -76,12 +75,15 @@ public class SimpleAudioPlayer {
 		System.out.println(received);
 		String value=received.substring(0,received.indexOf(';'));
 		received=value;
-            int key = Integer.parseInt(received.substring(0, 1));
+            System.out.println(received);
+		int key = Integer.parseInt(received.substring(0, 1));
             if (key == 1) {
                 index = Integer.parseInt(received.substring(2));
             } else if (key == 2) {
                 seekSec = Long.parseLong(received.substring(2));
-            }
+            }else if (key == 7) {
+		                volume = Integer.parseInt(received.substring(2));
+	    }
             System.out.println("Index" + index);
             gotoChoice(key, filePath1[index]);
 
@@ -93,7 +95,7 @@ public class SimpleAudioPlayer {
         return index;
     }
 
-    private void gotoChoice(int c, String filePath) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+ private void gotoChoice(int c, String filePath) throws IOException, LineUnavailableException, UnsupportedAudioFileException, InterruptedException {
         switch (c) {
             case 0:
                 pause();
@@ -121,12 +123,21 @@ public class SimpleAudioPlayer {
             case 6:
                 resumeAudio(filePath);
                 break;
-
+            case 7:
+                String cmd = "amixer -c 0 cset iface=MIXER,name='RX3 Digital Volume' " + volume;
+                Runtime run = Runtime.getRuntime();
+                Process pr = run.exec(cmd);
+                pr.waitFor();
+                BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+                String line = "";
+                while ((line = buf.readLine()) != null) {
+                    System.out.println(line);
+                }
+                break;
 
         }
 
     }
-
     // Method to play the audio
     public void play() {
         // start the clip
@@ -136,6 +147,7 @@ public class SimpleAudioPlayer {
 
     // Method to pause the audio
     public void pause() {
+	    if (clip!=null){
         if (status.equals("paused")) {
             System.out.println("audio is already paused");
             return;
@@ -143,6 +155,7 @@ public class SimpleAudioPlayer {
         this.currentFrame = this.clip.getMicrosecondPosition();
         clip.stop();
         status = "paused";
+	    }
     }
 
     // Method to resume the audio
@@ -196,7 +209,7 @@ public class SimpleAudioPlayer {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    private void next() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    private void next() throws UnsupportedAudioFileException, IOException, LineUnavailableException,InterruptedException {
         index = ++index > 15 ? 0 : index;
         if (index < 15) {
             System.err.println(filePath1[index] + "Index" + index);
@@ -206,7 +219,7 @@ public class SimpleAudioPlayer {
         }
     }
 
-    private void previous() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    private void previous() throws UnsupportedAudioFileException, IOException, LineUnavailableException,InterruptedException {
         index = --index < 0 ? 14 : index;
         if (index >= 0) {
             initializeAudioPlayer(filePath1[index]);
