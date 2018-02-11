@@ -43,11 +43,15 @@ console.log(event);
   } else if (g_state == 1) { // Play
     switch(parseInt(message.type)) {
     case 0: // Red button
+      var btn=document.getElementById("play");
+      btn.classList="";
       if (songStoped) {
         songStoped = false;
+        btn.classList="playBtn";
         broadcast(6,0); // resume
       } else {
         songStoped = true;
+        btn.classList="pauseBtn";
         broadcast(0, 0);
       }
       break;
