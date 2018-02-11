@@ -6,7 +6,7 @@ const SEEK_CONST = 500; // 500ms
 // Used to package values to be sent down to C
 function broadcast(key, ...values) {
     if (isNaN(key )) { return false; }
-    webSocket.send(key + ":" + values.join(":"));
+    webSocket.send(key + ":" + values.join(":") + ";");
 };
 
 // decides what do when message arrives
