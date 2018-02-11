@@ -124,10 +124,26 @@ function changegif(direction){
   gif.src=SongList[currentSong].title+".gif";
 }
 
+function playnextsong(){
+  currentSong++;
+
+  if (currentSong >= SongList.length) {
+    currentSong = 0;
+  }
+  startvisualization();
+}
+
 function startvisualization(){
   var player = document.getElementById("audio");
   player.src =SongList[currentSong].title+".wav";
   player.play();
+  player.onended = function (){
+    songStoped = true;
+    player.pause();
+    var btn=document.getElementById("play");
+    btn.classList="";
+    btn.classList="playBtn";
+  }
   if (!initialized) {
     initializeVisualizer($("canvas")[0], $("audio")[0]);
     initialized = true;
