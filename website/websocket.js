@@ -69,7 +69,7 @@ console.log(event);
     case 2: // Green Button
       document.getElementById("playerMode").style.display = "none";
       document.getElementById("selectionMode").style.display = "block";
-      player.pause();
+      if(player != null) player.pause();
       g_state = 0;
       break;
     case 3: // Jog Wheel Button
