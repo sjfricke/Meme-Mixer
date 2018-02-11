@@ -110,6 +110,10 @@ html, body {
     border-color: #202020;
 }
 
+#gif {
+    float: right;
+}
+
 #progressBar {
     width: 90%;
     margin: 10px auto;
