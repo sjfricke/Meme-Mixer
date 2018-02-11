@@ -18,25 +18,26 @@
 <body>
 
     <div id="selectionMode">
-
-    <div id="player">
-            <button id="play" class="playBtn"></button>
-            <button class="stopBtn"></button>
+        <div id='piemenu' data-wheelnav
+            data-wheelnav-slicepath='PieSlice'
+            data-wheelnav-marker data-wheelnav-markerpath='TriangleMarker'
+            data-wheelnav-navangle='0'
+            data-wheelnav-cssmode 
+            data-wheelnav-init>
         </div>
 
-        <div id='piemenu' data-wheelnav
-        data-wheelnav-slicepath='PieSlice'
-        data-wheelnav-marker data-wheelnav-markerpath='TriangleMarker'
-        data-wheelnav-navangle='0'
-        data-wheelnav-cssmode 
-        data-wheelnav-init>
-       </div>
-
-      <div class="radialtimer" id="timer"></div>
+        <div>
+            <img id ="gif" src="https://media.giphy.com/media/26gsnlYjswkyY3ENq/giphy.gif"/>
+        </div>
+        <div class="radialtimer" id="timer"></div>
 
     </div>
     
     <div id="playerMode">        
+        <div id="player">
+            <button id="play" class="playBtn"></button>
+            <button class="stopBtn"></button>
+        </div>
       <div id="buttons">
           <button id="red">PREVOUS</button>
           <button id="yellow">NEXT</button>

@@ -22,6 +22,14 @@ var SongList = [
   "Song 8"
   ]
 
+var GifList = [
+  "https://media.giphy.com/media/26gsnlYjswkyY3ENq/giphy.gif",
+  "https://media.giphy.com/media/3o7WIPkmUZI6ShpK12/giphy.gif",
+  "https://media.giphy.com/media/xULW8svBJsDZP9SCBO/giphy.gif",
+  "https://media.giphy.com/media/3ohs4kGmCp6KZgWRl6/giphy.gif",
+  "https://media.giphy.com/media/3oFzlZMqJnMNqWeczC/giphy.gif"
+]
+
 var songStoped = false;
 
 var clientID = 0;
@@ -98,6 +106,11 @@ function setup() {
 function skiptosong(num){
   currentSong=parseInt(num);
   progress(currentSong*10);
+}
+
+function changegif(direction){
+  var gif=document.getElementById("gif");
+  gif.src=GifList[currentSong];
 }
 
 function stupid(){

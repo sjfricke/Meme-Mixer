@@ -31,9 +31,11 @@ console.log(event);
       break;
     case 4: // Jog Wheel LEFT
       prevsong();
+      changegif();
       break;
     case 5: // Jog Wheel RIGHT
       nextsong();
+      changegif();
       break;
     case 6: // Volume
       break;
