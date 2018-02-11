@@ -39,6 +39,7 @@ console.log(event);
       changegif();
       break;
     case 6: // Volume
+      broadcast(7, message.value);
       break;
     default:
       warn("WebSocket", "No case for data: %0", message);
@@ -77,7 +78,8 @@ console.log(event);
     case 5: // Jog Wheel RIGHT
       broadcast(8, SEEK_CONST);
       break;
-    case 6: // Volume
+    case 6: // Volume    
+      broadcast(7, message.value);
       // displays volume, reall data already sent to audio
       break;
     default:
