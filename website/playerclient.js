@@ -22,7 +22,7 @@ var SongList = [
   {"title" : "Captain Teemo", "duration" : "2300" },
   {"title" : "Emperor Palpatine", "duration" : "4790" },
   {"title" : "F is for Friends", "duration" : "5690" },
-  {"title" : "Mine Mine Mine", "duration" : "11410" },
+  {"title" : "Mine", "duration" : "11410" },
   {"title" : "Mr Meseeks", "duration" : "2610" },
   {"title" : "Nothing is Impossible", "duration" : "1540" },
   {"title" : "Over 9000", "duration" : "5130" },
@@ -121,12 +121,12 @@ function skiptosong(num){
 
 function changegif(direction){
   var gif=document.getElementById("gif");
-  gif.src=GifList[currentSong];
+  gif.src=SongList[currentSong].title+".gif";
 }
 
 function startvisualization(){
   var player = document.getElementById("audio");
-  player.src =SongList[currentSong].title.replace(/\s+/g, '_')+".wav";
+  player.src =SongList[currentSong].title+".wav";
   player.play();
   if (!initialized) {
     initializeVisualizer($("canvas")[0], $("audio")[0]);

@@ -1,7 +1,7 @@
 /* class */
 html, body {
-    height: 480px;
-    width: 800px;
+    max-height: 480px;
+    max-width: 800px;
 }
 
 .bling {
@@ -112,6 +112,8 @@ html, body {
 
 #gif {
     float: right;
+    width: 400px;
+    height: 300px;
 }
 
 #progressBar {
