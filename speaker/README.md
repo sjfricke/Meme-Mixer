@@ -10,3 +10,5 @@ Here is the data that will be sent from host to speakers
 - `3:0` - **Next** song is played from list
 - `4:0` - **Back** plays previous song from list
 - `5:0` - **Restart** plays the current song from start
+- `6:<int>` - **Volume** to set form *<int>*
+ 
