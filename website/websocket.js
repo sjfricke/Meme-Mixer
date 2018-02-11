@@ -6,7 +6,7 @@ const SEEK_CONST = 500; // 500ms
 // Used to package values to be sent down to C
 function broadcast(key, ...values) {
     if (isNaN(key )) { return false; }
-    webSocket.send(key + ":" + values.join(":"));
+    webSocket.send(key + ":" + values.join(":") + ";");
 };
 
 // decides what do when message arrives
@@ -69,7 +69,7 @@ console.log(event);
     case 2: // Green Button
       document.getElementById("playerMode").style.display = "none";
       document.getElementById("selectionMode").style.display = "block";
-      player.pause();
+      if(player != null) player.pause();
       g_state = 0;
       break;
     case 3: // Jog Wheel Button
