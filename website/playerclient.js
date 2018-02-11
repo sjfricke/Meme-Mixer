@@ -106,7 +106,7 @@ function setup() {
     piemenu.wheelRadius = piemenu.wheelRadius * 0.83;
     piemenu.navItemsContinuous = true;
     // piemenu.sliceAngle = 22.5; for partial
-    piemenu.createWheel(SongList);
+    piemenu.createWheel(SongList.map(a=>a.title));
     piemenu.setTooltips(['0','1','2','3','4','5','6','7']);
     
 }
