@@ -28,7 +28,7 @@ public class SimpleAudioPlayer {
     // current status of clip
     String status;
     Long seekSec = 0L;
-    int volume = 0;
+
     AudioInputStream audioInputStream;
     String[] filePath1 = {
     "/home/linaro/Meme-Mixer/speaker/songs/All_Star.wav",
@@ -81,8 +81,6 @@ public class SimpleAudioPlayer {
                 index = Integer.parseInt(received.substring(2));
             } else if (key == 2) {
                 seekSec = Long.parseLong(received.substring(2));
-            } else if (key == 7) {
-                volume = Integer.parseInt(received.substring(2));
             }
             System.out.println("Index" + index);
             gotoChoice(key, filePath1[index]);
@@ -95,7 +93,7 @@ public class SimpleAudioPlayer {
         return index;
     }
 
-    private void gotoChoice(int c, String filePath) throws IOException, LineUnavailableException, UnsupportedAudioFileException, InterruptedException {
+    private void gotoChoice(int c, String filePath) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         switch (c) {
             case 0:
                 pause();
@@ -123,17 +121,7 @@ public class SimpleAudioPlayer {
             case 6:
                 resumeAudio(filePath);
                 break;
-            case 7:
-                String cmd = "amixer -c 0 cset iface=MIXER,name='RX3 Digital Volume' " + volume;
-                Runtime run = Runtime.getRuntime();
-                Process pr = run.exec(cmd);
-                pr.waitFor();
-                BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-                String line = "";
-                while ((line = buf.readLine()) != null) {
-                    System.out.println(line);
-                }
-                break;
+
 
         }
 
